@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-pool-1.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/crawler-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/groovy-all-1.6.5.jar"/>
+	<classpathentry kind="lib" path="lib/hazelcast-1.9.3.jar"/>
+	<classpathentry kind="lib" path="lib/jaligner.jar"/>
+	<classpathentry kind="lib" path="lib/jppf-admin.jar"/>
+	<classpathentry kind="lib" path="lib/jppf-client.jar"/>
+	<classpathentry kind="lib" path="lib/jppf-common.jar"/>
+	<classpathentry kind="lib" path="lib/jppf-jmxremote_optional-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jppf-node.jar"/>
+	<classpathentry kind="lib" path="lib/jppf-server.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="lib/looks-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-demos-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-memory-2.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-3.7-swing.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="config"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
