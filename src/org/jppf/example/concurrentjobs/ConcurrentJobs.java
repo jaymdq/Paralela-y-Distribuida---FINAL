@@ -35,9 +35,9 @@ public class ConcurrentJobs {
     try {
       ConcurrentJobs runner = new ConcurrentJobs();
       //Descomentar alguna linea para hacer uso de los demas patrones
-      //runner.multipleThreadsBlockingJobs();
+      runner.multipleThreadsBlockingJobs();
       //runner.singleThreadNonBlockingJobs();
-      runner.asynchronousNonBlockingJobs();
+      //runner.asynchronousNonBlockingJobs();
     } catch (Exception e) {
       e.printStackTrace();
     }
