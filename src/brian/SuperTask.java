@@ -75,8 +75,9 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 	// Constructors
 
-	public SuperTask(int id) {
+	public SuperTask(int id, int n_Task) {
 		this.id = id;
+		this.n_Task = n_Task;
 	}
 
 	// Getters and Setters
@@ -91,10 +92,9 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 		/* Parameter determination */
 
-		//mdsize = md_Better.PARTSIZE;
 		mdsize = PARTSIZE;
+	
 		one = new Particle [mdsize];
-		//l = md_Better.LENGTH;
 		l = LENGTH;
 
 		side = Math.pow((mdsize/den),0.3333333);
@@ -236,10 +236,8 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		/* compute forces */
 
 		for (i = 0 + id; i < mdsize; i +=/*JGFMolDynBench_Better.nthreads*/ n_Task) {
-			if (i > 0)
-				return;
 			//one[i].force(side,rcoff,mdsize,i,xx,yy,zz);
-			//one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts); 
+			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts); 
 		}
 
 	}
@@ -280,11 +278,6 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 		/* sum to get full potential energy and virial */
 
-		//Estas 3 variables eran de md_Better
-		//ek
-		//epot
-		//vir
-
 		if(((move+1) % iprint) == 0) {
 			ek[id] = 24.0*ekin;
 			epot[id] = 4.0 * epot[id];
@@ -295,60 +288,6 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			rp = (count / mdsize) * 100.0;
 		}
 
-	}
-
-
-	private void setData_1(DataProvider dataProvider){
-
-		PARTSIZE	= dataProvider.getParameter("PARTSIZE");
-		mm 			= dataProvider.getParameter("mm");
-		side 		= dataProvider.getParameter("side");
-		hsq			= dataProvider.getParameter("hsq");
-		sh_force	= dataProvider.getParameter("sh_force");
-		sh_force2	= dataProvider.getParameter("sh_force2");
-		epot 		= dataProvider.getParameter("epot");
-		vir 		= dataProvider.getParameter("vir");
-		ek 			= dataProvider.getParameter("ek");
-		interacts	= dataProvider.getParameter("interacts");
-		
-	}
-
-	private void setData_2(DataProvider dataProvider){
-		
-		mdsize	= dataProvider.getParameter("mdsize");
-		one 	= dataProvider.getParameter("one");
-		side 	= dataProvider.getParameter("side");
-		
-	}
-
-	private void setData_3(DataProvider dataProvider){
-	
-		side 		= dataProvider.getParameter("side");
-		rcoff 		= dataProvider.getParameter("rcoff");
-		mdsize		= dataProvider.getParameter("mdsize");
-		xx 			= dataProvider.getParameter("xx");
-		yy 			= dataProvider.getParameter("yy");
-		zz			= dataProvider.getParameter("zz");
-		epot 		= dataProvider.getParameter("epot");
-		vir 		= dataProvider.getParameter("vir");
-		interacts	= dataProvider.getParameter("interacts");
-		one 	= dataProvider.getParameter("one");
-		
-	}
-
-	private void setData_4(DataProvider dataProvider){
-
-		one		= dataProvider.getParameter("one");
-		hsq2	= dataProvider.getParameter("hsq2");
-		hsq		= dataProvider.getParameter("hsq");
-		vaverh 	= dataProvider.getParameter("vaverh");
-		move 	= dataProvider.getParameter("move");
-		ek 		= dataProvider.getParameter("ek");
-		epot 	= dataProvider.getParameter("epot");
-		etot 	= dataProvider.getParameter("etot");
-		den 	= dataProvider.getParameter("den");
-		vir		= dataProvider.getParameter("vir");
-		
 	}
 
 	private void setData(DataProvider dataProvider) {
@@ -372,40 +311,48 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		vir			= dataProvider.getParameter("vir");
 		xx 			= dataProvider.getParameter("xx");
 		yy 			= dataProvider.getParameter("yy");
-		zz			= dataProvider.getParameter("zz");		
-		
+		zz			= dataProvider.getParameter("zz");
+		tscale		= dataProvider.getParameter("tscale");
+		a			= dataProvider.getParameter("a");
+		sideh 		= dataProvider.getParameter("sideh");
+		npartm 		= dataProvider.getParameter("npartm");
+		rcoffs 		= dataProvider.getParameter("rcoffs");
+		vaver 		= dataProvider.getParameter("vaver");
+		ekin 		= dataProvider.getParameter("ekin");
+		vir 		= dataProvider.getParameter("vir");
+		temp 		= dataProvider.getParameter("temp");
+		pres 		= dataProvider.getParameter("pres");
+		vel			= dataProvider.getParameter("vel");
+		rp			= dataProvider.getParameter("rp");
+		sc			= dataProvider.getParameter("sc");
 	}
-
-	
+		
 	@Override
 	public void run() {
 
 		DataProvider dataProvider = getDataProvider();
 
-		if (dataProvider.getParameter("epot") == null){
+		if (dataProvider == null){
 			setResult(null);
 			return;
-		}		
-		
+		}
+				
 		setData(dataProvider);
 		
 		switch(this.state){
 		case PART_1: {
-			//setData_1(dataProvider);
 			part_1();
+			break;
 		}
 		case PART_2: {
-			//setData_2(dataProvider);
 			part_2();
 			break;
 		}
 		case PART_3: {
-			//setData_3(dataProvider);
 			part_3();
 			break;
 		}
 		case PART_4: {
-			//setData_4(dataProvider);
 			part_4();
 			break;
 		}
@@ -431,9 +378,6 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		result.put("tscale",tscale);
 		result.put("vaver",vaver);
 		result.put("vaverh",vaverh);
-		result.put("xvelocity",xvelocity);
-		result.put("yvelocity",yvelocity);
-		result.put("zvelocity",zvelocity);
 		result.put("ekin",ekin);
 		result.put("epot",epot);
 		result.put("vir",vir);
@@ -444,7 +388,14 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		result.put("vel",vel);
 		result.put("rp",rp);
 		result.put("sc",sc);
-	
+		result.put("ek", ek);
+		result.put("sh_force",sh_force);
+		result.put("sh_force2",sh_force2);
+		result.put("PARTSIZE",PARTSIZE);
+		result.put("xx",xx);
+		result.put("yy",yy);
+		result.put("zz",zz);
+					
 		// Se devuelven los resultados
 		setResult(result);
 	}

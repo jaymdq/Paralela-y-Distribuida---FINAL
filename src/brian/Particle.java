@@ -68,8 +68,7 @@ public class Particle implements Serializable{
 		fxi = 0.0;
 		fyi = 0.0;
 		fzi = 0.0;
-		if(true)
-			return;
+	
 		for (int i = x + 1; i < mdsize; i++) {
 			xx = this.xcoord - runner.one[i].xcoord;
 			yy = this.ycoord - runner.one[i].ycoord;
