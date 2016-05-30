@@ -14,13 +14,10 @@ public class Particle implements Serializable{
 	int part_id;
 	int id;
 	double [][] sh_force;
-	double [][][] sh_force2;
-	//mdRunner runner;
 	SuperTask runner;
 
 	public Particle(double xcoord, double ycoord, double zcoord, double xvelocity,
-			double yvelocity,double zvelocity,double [][] sh_force, 
-			double [][][] sh_force2,int id, /*mdRunner */ SuperTask runner) {
+			double yvelocity,double zvelocity,double [][] sh_force,int id, SuperTask runner) {
 
 		this.xcoord = xcoord; 
 		this.ycoord = ycoord; 
@@ -29,12 +26,11 @@ public class Particle implements Serializable{
 		this.yvelocity = yvelocity;
 		this.zvelocity = zvelocity;
 		this.sh_force = sh_force;
-		this.sh_force2 = sh_force2;
 		this.id=id;
 		this.runner=runner;
 	}
 
-	public void domove(double side,int part_id) {
+	public void domove(double side,int part_id, double [][] sh_force) {
 
 		xcoord = xcoord + xvelocity + sh_force[0][part_id];
 		ycoord = ycoord + yvelocity + sh_force[1][part_id];
@@ -53,7 +49,7 @@ public class Particle implements Serializable{
 
 	}
 
-	public void force(double side, double rcoff,int mdsize,int x, double xx, double yy, double zz,double [] epot,double [] vir,int[] interacts) {
+	public void force(double side, double rcoff,int mdsize,int x, double xx, double yy, double zz,double [] epot,double [] vir,int[] interacts, double[][][] sh_force2) {
 
 		double sideh;
 		double rcoffs;
@@ -123,7 +119,7 @@ public class Particle implements Serializable{
 
 	}
 
-	public double mkekin(double hsq2,int part_id) {
+	public double mkekin(double hsq2,int part_id, double[][] sh_force) {
 
 		double sumt = 0.0; 
 

@@ -1,13 +1,9 @@
 package brian;
 
 import java.util.HashMap;
-import java.util.concurrent.CyclicBarrier;
 
 import org.jppf.node.protocol.AbstractTask;
 import org.jppf.node.protocol.DataProvider;
-
-import moldyn.Better.JGFMolDynBench_Better;
-import moldyn.Better.md_Better;
 
 public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
@@ -16,7 +12,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static enum STATE {
-	    PART_1, PART_2, PART_3, PART_4 
+		PART_1, PART_2, PART_3, PART_4 
 	}
 
 	// Variables
@@ -93,7 +89,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		/* Parameter determination */
 
 		mdsize = PARTSIZE;
-	
+
 		one = new Particle [mdsize];
 		l = LENGTH;
 
@@ -115,14 +111,16 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		xvelocity = 0.0;
 		yvelocity = 0.0;
 		zvelocity = 0.0;
-		
+
 		ijk = 0;
 		for (lg = 0; lg <= 1; lg++) {
 			for (i = 0; i < mm; i++) {
 				for ( j = 0; j < mm; j++) {
 					for (k = 0; k < mm; k++) {
+						//one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
+						//xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
 						one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
-								xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
+								xvelocity,yvelocity,zvelocity,sh_force,id,this);
 						ijk = ijk + 1;
 					}
 				}
@@ -132,14 +130,16 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			for (i = 0; i < mm; i++) {
 				for (j = 0; j < mm; j++) {
 					for (k = 0; k < mm; k++) {
+						//one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
+						//(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
 						one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
-								(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
+								(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,id,this);
 						ijk = ijk + 1;
 					}
 				}
 			}
 		}
-				
+
 		/* Initialise velocities */
 
 		iseed = 0;
@@ -165,7 +165,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			one[i].zvelocity = r * randnum.v1;
 			one[i+1].zvelocity  = r * randnum.v2;
 		}
-		
+
 		/* velocity scaling */
 
 		ekin = 0.0;
@@ -180,7 +180,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			one[i].xvelocity = one[i].xvelocity - sp;
 			ekin = ekin + one[i].xvelocity * one[i].xvelocity;
 		}
-		
+
 		sp = 0.0;
 		for(i = 0; i < mdsize; i++) {
 			sp = sp + one[i].yvelocity;
@@ -202,7 +202,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			one[i].zvelocity = one[i].zvelocity - sp;
 			ekin = ekin + one[i].zvelocity*one[i].zvelocity;
 		}
-				
+
 		ts = tscale * ekin;
 		sc = h * Math.sqrt(tref/ts);
 
@@ -213,7 +213,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			one[i].zvelocity = one[i].zvelocity * sc;     
 
 		}
-		
+
 	}
 
 	private void part_2() {
@@ -221,7 +221,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		/* move the particles and update velocities */
 
 		for (i = 0; i < mdsize; i++) {
-			one[i].domove(side,i);       
+			one[i].domove(side,i,sh_force);       
 		}
 
 	}
@@ -235,9 +235,8 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 		/* compute forces */
 
-		for (i = 0 + id; i < mdsize; i +=/*JGFMolDynBench_Better.nthreads*/ n_Task) {
-			//one[i].force(side,rcoff,mdsize,i,xx,yy,zz);
-			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts); 
+		for (i = 0 + id; i < mdsize; i += n_Task) {
+			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts,sh_force2); 
 		}
 
 	}
@@ -248,7 +247,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 		sum = 0.0;
 		for (i = 0; i < mdsize; i++) {
-			sum = sum + one[i].mkekin(hsq2,i);  
+			sum = sum + one[i].mkekin(hsq2,i,sh_force);  
 		}
 
 		ekin = sum/hsq;
@@ -291,6 +290,8 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 	}
 
 	private void setData(DataProvider dataProvider) {
+
+		sh_force2	= dataProvider.getParameter("sh_force2");
 		PARTSIZE	= dataProvider.getParameter("PARTSIZE");
 		den 		= dataProvider.getParameter("den");
 		ek 			= dataProvider.getParameter("ek");
@@ -302,10 +303,9 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		mdsize		= dataProvider.getParameter("mdsize");
 		mm 			= dataProvider.getParameter("mm");
 		move 		= dataProvider.getParameter("move");
-		one 		= dataProvider.getParameter("one");
+		one 		= dataProvider.getParameter("one_"+id);
 		rcoff 		= dataProvider.getParameter("rcoff");
 		sh_force	= dataProvider.getParameter("sh_force");
-		sh_force2	= dataProvider.getParameter("sh_force2");
 		side 		= dataProvider.getParameter("side");
 		vaverh 		= dataProvider.getParameter("vaverh");
 		vir			= dataProvider.getParameter("vir");
@@ -326,19 +326,14 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		rp			= dataProvider.getParameter("rp");
 		sc			= dataProvider.getParameter("sc");
 	}
-		
+
 	@Override
 	public void run() {
 
 		DataProvider dataProvider = getDataProvider();
 
-		if (dataProvider == null){
-			setResult(null);
-			return;
-		}
-				
 		setData(dataProvider);
-		
+
 		switch(this.state){
 		case PART_1: {
 			part_1();
@@ -365,8 +360,11 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
+		result.put("sh_force2_[0]_"+id,sh_force2[0][id]);
+		result.put("sh_force2_[1]_"+id,sh_force2[1][id]);
+		result.put("sh_force2_[2]_"+id,sh_force2[2][id]);
 		result.put("mdsize", mdsize);
-		result.put("one", one);
+		result.put("one_"+id, one);
 		result.put("side", side);
 		result.put("rcoff", rcoff);
 		result.put("a", a);
@@ -379,23 +377,22 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		result.put("vaver",vaver);
 		result.put("vaverh",vaverh);
 		result.put("ekin",ekin);
-		result.put("epot",epot);
-		result.put("vir",vir);
-		result.put("interacts",interacts);
+		result.put("epot_"+id,epot[id]);
+		result.put("vir_"+id,vir[id]);
+		result.put("interacts_"+id,interacts[id]);
 		result.put("etot",etot);
 		result.put("temp",temp);
 		result.put("pres",pres);
 		result.put("vel",vel);
 		result.put("rp",rp);
 		result.put("sc",sc);
-		result.put("ek", ek);
+		result.put("ek_"+id, ek[id]);
 		result.put("sh_force",sh_force);
-		result.put("sh_force2",sh_force2);
 		result.put("PARTSIZE",PARTSIZE);
 		result.put("xx",xx);
 		result.put("yy",yy);
 		result.put("zz",zz);
-					
+
 		// Se devuelven los resultados
 		setResult(result);
 	}
