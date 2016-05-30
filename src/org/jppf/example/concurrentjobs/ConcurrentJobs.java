@@ -141,6 +141,7 @@ public class ConcurrentJobs {
    */
   public static JPPFJob createJob(final String jobName, final int nbTasks, final long duration) {
     JPPFJob job = new JPPFJob();
+
     // set the job name
     job.setName(jobName);
     for (int i=1; i<=nbTasks; i++) {
