@@ -12,7 +12,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static enum STATE {
-		PART_1, PART_2, PART_3, PART_4 
+		PART_1, PART_2
 	}
 
 	// Variables
@@ -84,139 +84,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 	// Methods
 
-	private void part_1 (){
-
-		/* Parameter determination */
-
-		mdsize = PARTSIZE;
-
-		one = new Particle [mdsize];
-		l = LENGTH;
-
-		side = Math.pow((mdsize/den),0.3333333);
-		rcoff = mm/4.0;
-
-		a = side/mm;
-		sideh = side*0.5;
-		hsq = h*h;
-		hsq2 = hsq*0.5;
-		npartm = mdsize - 1;
-		rcoffs = rcoff * rcoff;
-		tscale = 16.0 / (1.0 * mdsize - 1.0);
-		vaver = 1.13 * Math.sqrt(tref / 24.0);
-		vaverh = vaver * h;
-
-		/* Particle Generation */
-
-		xvelocity = 0.0;
-		yvelocity = 0.0;
-		zvelocity = 0.0;
-
-		ijk = 0;
-		for (lg = 0; lg <= 1; lg++) {
-			for (i = 0; i < mm; i++) {
-				for ( j = 0; j < mm; j++) {
-					for (k = 0; k < mm; k++) {
-						//one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
-						//xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
-						one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
-								xvelocity,yvelocity,zvelocity,sh_force,id,this);
-						ijk = ijk + 1;
-					}
-				}
-			}
-		}
-		for (lg = 1; lg <= 2; lg++) {
-			for (i = 0; i < mm; i++) {
-				for (j = 0; j < mm; j++) {
-					for (k = 0; k < mm; k++) {
-						//one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
-						//(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
-						one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
-								(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,id,this);
-						ijk = ijk + 1;
-					}
-				}
-			}
-		}
-
-		/* Initialise velocities */
-
-		iseed = 0;
-		v1 = 0.0;
-		v2 = 0.0;
-
-		randnum = new Random(iseed,v1,v2);
-
-		for (i = 0; i < mdsize; i += 2) {
-			r  = randnum.seed();
-			one[i].xvelocity = r * randnum.v1;
-			one[i+1].xvelocity  = r * randnum.v2;
-		}
-
-		for (i = 0; i < mdsize; i += 2) {
-			r  = randnum.seed();
-			one[i].yvelocity = r * randnum.v1;
-			one[i+1].yvelocity  = r * randnum.v2;
-		}
-
-		for (i = 0; i < mdsize; i += 2) {
-			r  = randnum.seed();
-			one[i].zvelocity = r * randnum.v1;
-			one[i+1].zvelocity  = r * randnum.v2;
-		}
-
-		/* velocity scaling */
-
-		ekin = 0.0;
-		sp = 0.0;
-
-		for(i = 0; i < mdsize; i++) {
-			sp = sp + one[i].xvelocity;
-		}
-		sp = sp / mdsize;
-
-		for(i = 0; i < mdsize; i++) {
-			one[i].xvelocity = one[i].xvelocity - sp;
-			ekin = ekin + one[i].xvelocity * one[i].xvelocity;
-		}
-
-		sp = 0.0;
-		for(i = 0; i < mdsize; i++) {
-			sp = sp + one[i].yvelocity;
-		}
-		sp = sp / mdsize;
-
-		for(i = 0; i < mdsize; i++) {
-			one[i].yvelocity = one[i].yvelocity - sp;
-			ekin = ekin + one[i].yvelocity * one[i].yvelocity;
-		}
-
-		sp = 0.0;
-		for(i = 0; i < mdsize; i++) {
-			sp = sp + one[i].zvelocity;
-		}
-		sp = sp / mdsize;
-
-		for(i = 0; i < mdsize; i++) {
-			one[i].zvelocity = one[i].zvelocity - sp;
-			ekin = ekin + one[i].zvelocity*one[i].zvelocity;
-		}
-
-		ts = tscale * ekin;
-		sc = h * Math.sqrt(tref/ts);
-
-		for(i = 0; i < mdsize; i++) {
-
-			one[i].xvelocity = one[i].xvelocity * sc;     
-			one[i].yvelocity = one[i].yvelocity * sc;     
-			one[i].zvelocity = one[i].zvelocity * sc;     
-
-		}
-
-	}
-
-	private void part_2() {
+	private void part_1() {
 
 		/* move the particles and update velocities */
 
@@ -224,10 +92,12 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			one[i].domove(side,i,sh_force);       
 		}
 
-	}
-
-	private void part_3() {
-
+		for( j = 0; j < 3; j++) {
+			for (i = 0; i < mdsize; i++) {
+				sh_force[j][i] = 0.0;
+			}
+		}
+		
 		//Estas 3 variables eran de md_Better
 		epot[id] = 0.0;
 		vir[id] = 0.0;
@@ -236,13 +106,21 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		/* compute forces */
 
 		for (i = 0 + id; i < mdsize; i += n_Task) {
-			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts,sh_force2); 
+			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts,sh_force2,one,id); 
 		}
 
 	}
 
-	private void part_4() {
+	private void part_2() {
 
+		for(int k = 0; k < 3; k++) {
+			for(i = 0; i < mdsize; i++) {
+				for( j = 0; j < n_Task; j++) {
+					sh_force2[k][j][i] = 0.0;
+				}
+			}
+		}
+		
 		/*scale forces, update velocities */
 
 		sum = 0.0;
@@ -304,6 +182,8 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		mm 			= dataProvider.getParameter("mm");
 		move 		= dataProvider.getParameter("move");
 		one 		= dataProvider.getParameter("one_"+id);
+		if (one == null)
+			one = dataProvider.getParameter("one");
 		rcoff 		= dataProvider.getParameter("rcoff");
 		sh_force	= dataProvider.getParameter("sh_force");
 		side 		= dataProvider.getParameter("side");
@@ -341,14 +221,6 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		}
 		case PART_2: {
 			part_2();
-			break;
-		}
-		case PART_3: {
-			part_3();
-			break;
-		}
-		case PART_4: {
-			part_4();
 			break;
 		}
 		default: {

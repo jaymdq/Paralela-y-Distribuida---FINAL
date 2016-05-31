@@ -15,7 +15,7 @@ public class Main {
 			System.out.println("No considerar " + i);
 			
 			try{
-			Work worker = new Work(1);
+			Work worker = new Work(2);
 			worker.work();
 			worker.validateResults();
 			} catch (Exception e){
