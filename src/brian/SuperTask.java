@@ -65,7 +65,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 	protected Particle one [] = null;
 
 	// Agregadas
-	protected int id;
+	private int id;
 	private STATE state = STATE.PART_1;
 	private int n_Task;
 
@@ -169,6 +169,10 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 	private void setData(DataProvider dataProvider) {
 
+		one 		= dataProvider.getParameter("one_"+id);
+		if (one == null)
+			one = dataProvider.getParameter("one");
+		
 		sh_force2	= dataProvider.getParameter("sh_force2");
 		PARTSIZE	= dataProvider.getParameter("PARTSIZE");
 		den 		= dataProvider.getParameter("den");
@@ -181,17 +185,14 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		mdsize		= dataProvider.getParameter("mdsize");
 		mm 			= dataProvider.getParameter("mm");
 		move 		= dataProvider.getParameter("move");
-		one 		= dataProvider.getParameter("one_"+id);
-		if (one == null)
-			one = dataProvider.getParameter("one");
 		rcoff 		= dataProvider.getParameter("rcoff");
 		sh_force	= dataProvider.getParameter("sh_force");
 		side 		= dataProvider.getParameter("side");
 		vaverh 		= dataProvider.getParameter("vaverh");
 		vir			= dataProvider.getParameter("vir");
-		xx 			= dataProvider.getParameter("xx");
-		yy 			= dataProvider.getParameter("yy");
-		zz			= dataProvider.getParameter("zz");
+		//xx 			= dataProvider.getParameter("xx");
+		//yy 			= dataProvider.getParameter("yy");
+		//zz			= dataProvider.getParameter("zz");
 		tscale		= dataProvider.getParameter("tscale");
 		a			= dataProvider.getParameter("a");
 		sideh 		= dataProvider.getParameter("sideh");
@@ -210,6 +211,13 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 	@Override
 	public void run() {
 
+		id = Integer.parseInt(getId());
+		
+		/*if (id > 0){
+			setResult(null);
+			return;
+		}*/
+			
 		DataProvider dataProvider = getDataProvider();
 
 		setData(dataProvider);
@@ -235,36 +243,43 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		result.put("sh_force2_[0]_"+id,sh_force2[0][id]);
 		result.put("sh_force2_[1]_"+id,sh_force2[1][id]);
 		result.put("sh_force2_[2]_"+id,sh_force2[2][id]);
-		result.put("mdsize", mdsize);
 		result.put("one_"+id, one);
-		result.put("side", side);
-		result.put("rcoff", rcoff);
-		result.put("a", a);
-		result.put("sideh",sideh);
-		result.put("hsq",hsq);
-		result.put("hsq2",hsq2);
-		result.put("npartm",npartm);
-		result.put("rcoffs",rcoffs);
-		result.put("tscale",tscale);
-		result.put("vaver",vaver);
-		result.put("vaverh",vaverh);
-		result.put("ekin",ekin);
 		result.put("epot_"+id,epot[id]);
 		result.put("vir_"+id,vir[id]);
 		result.put("interacts_"+id,interacts[id]);
+		result.put("ek_"+id, ek[id]);
+		
+		//--
+		//result.put("mdsize", mdsize);
+		//result.put("side", side);
+		//result.put("rcoff", rcoff);
+		//result.put("a", a);
+		//result.put("hsq",hsq);
+		//result.put("hsq2",hsq2);
+		//result.put("rcoffs",rcoffs);
+		//result.put("PARTSIZE",PARTSIZE);
+		//result.put("tscale",tscale);
+		//result.put("vaver",vaver);
+		//result.put("vaverh",vaverh);
+		//result.put("sideh",sideh);
+		//result.put("xx",xx);
+		//result.put("yy",yy);
+		//result.put("zz",zz);
+		//result.put("npartm",npartm);
+		
+		
+		//result.put("sh_force",sh_force);
+		
+		//--
+		result.put("ekin",ekin);
 		result.put("etot",etot);
 		result.put("temp",temp);
 		result.put("pres",pres);
 		result.put("vel",vel);
 		result.put("rp",rp);
 		result.put("sc",sc);
-		result.put("ek_"+id, ek[id]);
-		result.put("sh_force",sh_force);
-		result.put("PARTSIZE",PARTSIZE);
-		result.put("xx",xx);
-		result.put("yy",yy);
-		result.put("zz",zz);
-
+		
+		
 		// Se devuelven los resultados
 		setResult(result);
 	}

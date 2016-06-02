@@ -22,9 +22,9 @@ public class Work {
 	// Variables de la clase Work
 	private ArrayList<SuperTask> tasks;
 	private HashMap<String, Particle[]> oneValues;
-	
+
 	// Variables relacionadas al problema
-	
+
 	public static final int ITERS = 100;
 	public static final double LENGTH = 50e-10;
 	public static final double m = 4.0026;
@@ -46,7 +46,7 @@ public class Work {
 
 	// Variables del Runnable
 	// Del Runnable
-	
+
 	double count = 0.0;
 
 	double tref = 0.722;
@@ -80,7 +80,6 @@ public class Work {
 	private DataProvider dataProvider;
 
 	private JPPFJob job;
-	private double [][][] sh_force2_aux;
 
 	// Constructors
 
@@ -116,10 +115,10 @@ public class Work {
 			// Difusión de los datos 
 			// Aclaración: el dataProvider tiene que ser creado y rellenado antes de crear el Job.
 			dataProvider = new MemoryMapDataProvider();
-			populateDataProvider();
+			//populateDataProvider();
 
 			// Se crea el trabajo 1
-			JPPFJob job = createJob(n_Task);
+			job = createJob(n_Task);
 
 			// Determinamos que el Job sea bloqueante
 			job.setBlocking(true);
@@ -130,7 +129,7 @@ public class Work {
 					processResults(event.getJob());
 				}
 			});
-			
+
 			// Trabajo del thread principal
 			jgfutil.JGFInstrumentor.addTimer("Section3:MolDyn:Run");
 			jgfutil.JGFInstrumentor.startTimer("Section3:MolDyn:Run");
@@ -141,10 +140,11 @@ public class Work {
 			for (move = 0; move < movemx; move++) {
 
 				//System.out.println("\n Nueva iteración: " + move );
-				
+
 				// Parte 1 -> Distribuido
 				updateTaskStates(SuperTask.STATE.PART_1);
 				jppfClient.submitJob(job);
+
 				
 				// Trabajo del thread principal
 				for(int k = 0; k < 3; k++) {
@@ -159,12 +159,12 @@ public class Work {
 					epot[0] += epot[j];
 					vir[0] += vir[j];
 				}
-				
+
 				for( j = 1; j < n_Task; j++) {       
 					epot[j] = epot[0];
 					vir[j] = vir[0];
 				}
-				
+
 				for( j = 0; j < n_Task; j++) {
 					interactions += interacts[j];
 				}
@@ -174,10 +174,11 @@ public class Work {
 						sh_force[j][i] = sh_force[j][i] * hsq2;
 					}
 				}
-				
+
 				// Parte 2 -> Distribuido
 				updateTaskStates(SuperTask.STATE.PART_2);
 				jppfClient.submitJob(job);
+				
 
 			}
 
@@ -186,20 +187,19 @@ public class Work {
 		}
 
 		JGFInstrumentor.addOpsToTimer("Section3:MolDyn:Run", (double) interactions);
-	    JGFInstrumentor.addOpsToTimer("Section3:MolDyn:Total", 1);
+		JGFInstrumentor.addOpsToTimer("Section3:MolDyn:Total", 1);
 
 	}
 
 	private void populateDataProvider() {
 
-		for (String key : oneValues.keySet()){
-			dataProvider.setParameter(key, oneValues.get(key));
-		}
-		
 		if (oneValues.isEmpty()) {
 			dataProvider.setParameter("one", one);
-		}
-		
+		}else
+			for (String key : oneValues.keySet()){
+				dataProvider.setParameter(key, oneValues.get(key));
+			}
+
 		dataProvider.setParameter("PARTSIZE",PARTSIZE);
 		dataProvider.setParameter("a", a);
 		dataProvider.setParameter("den",den);
@@ -229,9 +229,9 @@ public class Work {
 		dataProvider.setParameter("vaverh",vaverh);
 		dataProvider.setParameter("vel",vel);
 		dataProvider.setParameter("vir", vir);
-		dataProvider.setParameter("xx",xx);
-		dataProvider.setParameter("yy",yy);
-		dataProvider.setParameter("zz",zz);
+		//dataProvider.setParameter("xx",xx);
+		//dataProvider.setParameter("yy",yy);
+		//dataProvider.setParameter("zz",zz);
 	}
 
 	private void getResults(Task<?> task) {
@@ -239,18 +239,29 @@ public class Work {
 		@SuppressWarnings("unchecked")
 		HashMap<String, Object> results = (HashMap<String, Object>) task.getResult();
 
-		mdsize 			= (int) results.get("mdsize");
-		side 			= (double) results.get("side");
-		rcoff 			= (double) results.get("rcoff");
-		a 				= (double) results.get("a");
-		sideh 			= (double) results.get("sideh");
-		hsq 			= (double) results.get("hsq");
-		hsq2 			= (double) results.get("hsq2");
-		npartm 			= (int) results.get("npartm");
-		rcoffs 			= (double) results.get("rcoffs");
-		tscale 			= (double) results.get("tscale");
-		vaver 			= (double) results.get("vaver");
-		vaverh 			= (double) results.get("vaverh");
+		// Cosas que estoy seguro que no vale la pena obtener
+		//mdsize 			= (int) results.get("mdsize");
+		//rcoff 			= (double) results.get("rcoff");
+		//hsq 			= (double) results.get("hsq");
+		//hsq2 			= (double) results.get("hsq2");
+		//rcoffs 			= (double) results.get("rcoffs");
+		//side 			= (double) results.get("side");
+		//a 				= (double) results.get("a");
+		//tscale 			= (double) results.get("tscale");
+		//vaver 			= (double) results.get("vaver");
+		//vaverh 			= (double) results.get("vaverh");
+		//sideh 			= (double) results.get("sideh");
+		//xx 				= (double) results.get("xx");
+		//yy 				= (double) results.get("yy");
+		//zz 				= (double) results.get("zz");
+		
+		//--
+		
+		
+		sh_force 		= (double[][]) results.get("sh_force");
+		
+		//--
+		//npartm 			= (int) results.get("npartm");
 		ekin 			= (double) results.get("ekin");
 		etot 			= (double) results.get("etot");
 		temp 			= (double) results.get("temp");
@@ -258,20 +269,16 @@ public class Work {
 		vel 			= (double) results.get("vel");
 		rp 				= (double) results.get("rp");
 		sc 				= (double) results.get("sc");
-		sh_force 		= (double[][]) results.get("sh_force");
-		xx 				= (double) results.get("xx");
-		yy 				= (double) results.get("yy");
-		zz 				= (double) results.get("zz");
 		
 		// Utilización del id de la Task
 		Integer id 	= Integer.parseInt(task.getId());	
-	
+
 		oneValues.put("one_"+task.getId(), (Particle[]) results.get("one_"+id));
 		epot[id]		= (double) results.get("epot_"+id);
 		vir[id]			= (double) results.get("vir_"+id);
 		interacts[id]	= (int) results.get("interacts_"+id);
 		ek[id]			= (double) results.get("ek_"+id);
-			
+
 		sh_force2[0][id] =  (double[]) results.get("sh_force2_[0]_"+id);
 		sh_force2[1][id] =  (double[]) results.get("sh_force2_[1]_"+id);
 		sh_force2[2][id] =  (double[]) results.get("sh_force2_[2]_"+id);
@@ -289,7 +296,6 @@ public class Work {
 
 			// Se crea una Task
 			SuperTask task = new SuperTask(i,nbTasks);
-			task.setDataProvider(dataProvider);
 			tasks.add(task);
 
 			try {
@@ -318,7 +324,7 @@ public class Work {
 
 	}
 
-	public void processResults(JPPFJob job) {
+	public synchronized void processResults(JPPFJob job) {
 		//System.out.printf("Resultados del Job '%s' %n", job.getName());
 
 		List<Task<?>> results = job.getAllResults();
@@ -328,8 +334,8 @@ public class Work {
 			if (task.getThrowable() != null) { 
 				System.out.printf("%s raised an exception : %s%n", task.getId(), ExceptionUtils.getStackTrace(task.getThrowable()).toString());
 			} else { 
-				//System.out.printf("result of %s : %s%n", task.getId(), task.getResult());
 				getResults(task);
+				System.out.println("Result of " + task.getId() + " " + task.getResult().toString());
 			}
 		}
 	}
@@ -356,7 +362,7 @@ public class Work {
 		}
 
 	}
-	
+
 	private void initialize (){
 
 		/* Parameter determination */
