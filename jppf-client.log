@@ -1,11 +1,119 @@
-2016-05-23 16:20:44,914 [WARN ][org.jppf.utils.configuration.PropertiesLoader.readInclude(143)]: Could not read [file] 'jppf-common.properties' specified in include statement '#!include file jppf-common.properties', reason: java.lang.NullPointerException: null
-2016-05-23 16:20:45,063 [INFO ][org.jppf.utils.ManagementUtils.<clinit>(153)]: management successfully initialized
-2016-05-23 16:20:45,080 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
-2016-05-23 16:20:45,080 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
-2016-05-23 16:20:45,081 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=1656, UUID=935D2925-34F6-0351-D720-5E4F83EB8CCB
-2016-05-23 16:20:45,081 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
-2016-05-23 16:20:46,618 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
-2016-05-23 16:20:46,655 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at Brian-PC:11111
-2016-05-23 16:20:46,663 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
-2016-05-23 16:20:46,664 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at Brian-PC:11111
-2016-05-23 16:20:46,756 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:37:42,808 [WARN ][org.jppf.utils.configuration.PropertiesLoader.readInclude(143)]: Could not read [file] 'jppf-common.properties' specified in include statement '#!include file jppf-common.properties', reason: java.lang.NullPointerException: null
+2016-07-07 11:37:42,938 [INFO ][org.jppf.utils.ManagementUtils.<clinit>(153)]: management successfully initialized
+2016-07-07 11:37:42,954 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:37:42,954 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:37:42,955 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=BBF6FF6E-A7F5-7BFC-2031-71351EED125B
+2016-07-07 11:37:42,955 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:37:44,566 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:37:44,584 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:37:44,604 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:37:44,605 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:37:44,696 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:38:55,068 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:38:55,069 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:38:55,070 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=2E7DCE42-103E-CEDE-9900-7BCF6E9EBB7B
+2016-07-07 11:38:55,071 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:38:56,394 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:38:56,406 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at 192.168.2.55:11111
+2016-07-07 11:38:56,417 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:38:56,419 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at 192.168.2.55:11111
+2016-07-07 11:38:56,441 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:40:06,050 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:40:06,050 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:40:06,051 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=E0600994-63CC-1AAE-33B1-C6B5BC1E90BC
+2016-07-07 11:40:06,051 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:40:07,453 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:40:07,460 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:40:07,465 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:40:07,465 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:40:07,476 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:41:41,885 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:41:41,885 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:41:41,886 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=648209F9-B0CD-403D-FC50-8D09ACE67F36
+2016-07-07 11:41:41,886 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:41:42,457 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:41:42,459 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:41:42,466 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:41:42,467 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:41:42,502 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:43:02,873 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:43:02,873 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:43:02,874 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=1DED361A-AFC7-FB40-A0F8-156B56FC11CF
+2016-07-07 11:43:02,874 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:43:03,633 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:43:03,639 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at 192.168.2.55:11111
+2016-07-07 11:43:03,647 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:43:03,648 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at 192.168.2.55:11111
+2016-07-07 11:43:03,656 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:44:13,635 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:44:13,636 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:44:13,636 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=469F9293-9ED0-B9E3-D3FE-12834F6718EF
+2016-07-07 11:44:13,636 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:44:14,801 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:44:14,805 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at 192.168.2.55:11111
+2016-07-07 11:44:14,815 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:44:14,816 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at 192.168.2.55:11111
+2016-07-07 11:44:14,829 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:45:34,428 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:45:34,428 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:45:34,429 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=B4A020BE-A112-2E70-BFE6-B3780B0BACD9
+2016-07-07 11:45:34,429 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:45:35,925 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:45:35,929 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:45:35,937 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:45:35,937 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:45:35,942 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:47:01,462 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:47:01,462 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:47:01,462 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=8CC611AD-E275-5C56-BD9F-37D8BC0CB1DB
+2016-07-07 11:47:01,462 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:47:02,513 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:47:02,515 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:47:02,520 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:47:02,521 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:47:02,527 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:49:03,742 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:49:03,743 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:49:03,744 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=517F4E0A-9CDA-7EE9-5C35-FD44EF96B9B8
+2016-07-07 11:49:03,744 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:49:04,918 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:49:04,941 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at 192.168.2.55:11111
+2016-07-07 11:49:04,954 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:49:04,966 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at 192.168.2.55:11111
+2016-07-07 11:49:04,971 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:50:29,120 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:50:29,120 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:50:29,121 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=9CF49F75-D9C0-9D25-31D7-CBD414A03467
+2016-07-07 11:50:29,122 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:50:30,139 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:50:30,148 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:50:30,158 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:50:30,158 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:50:30,165 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:51:53,106 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:51:53,107 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:51:53,107 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=0979CBBF-698B-F053-DD2F-42031A79BC3E
+2016-07-07 11:51:53,108 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:51:54,236 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:51:54,244 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at 192.168.2.55:11111
+2016-07-07 11:51:54,250 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:51:54,250 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at 192.168.2.55:11111
+2016-07-07 11:51:54,262 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:53:35,032 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:53:35,032 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:53:35,033 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=407915FC-ED44-78B0-1C92-D8FF486C9A6C
+2016-07-07 11:53:35,033 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:53:35,456 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:53:35,459 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:53:35,463 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:53:35,464 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:53:35,474 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server
+2016-07-07 11:55:48,914 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(80)]: --------------------------------------------------------------------------------
+2016-07-07 11:55:48,914 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(81)]: JPPF Version: 5.1.3, Build number: 1762, Build date: 2016-03-24 07:06 CET
+2016-07-07 11:55:48,914 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(82)]: starting client with PID=188, UUID=BBADC445-01EE-32E5-36C6-5F178AA30797
+2016-07-07 11:55:48,915 [INFO ][org.jppf.utils.VersionUtils.logVersionInformation(83)]: --------------------------------------------------------------------------------
+2016-07-07 11:55:49,762 [INFO ][org.jppf.client.AbstractGenericClient.newConnection(281)]: connection [jppf_discovery-1-1] created
+2016-07-07 11:55:49,764 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(76)]: [client: jppf_discovery-1-1 - ClassServer] Attempting connection to the class server at BRIAN-PC:11111
+2016-07-07 11:55:49,776 [INFO ][org.jppf.client.ClassServerDelegateImpl.init(84)]: [client: jppf_discovery-1-1 - ClassServer] Reconnected to the class server
+2016-07-07 11:55:49,776 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(78)]: [client: jppf_discovery-1-1 - TasksServer] Attempting connection to the task server at BRIAN-PC:11111
+2016-07-07 11:55:49,782 [INFO ][org.jppf.client.TaskServerConnectionHandler.init(91)]: [client: jppf_discovery-1-1 - TasksServer] Reconnected to the JPPF task server

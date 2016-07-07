@@ -15,7 +15,7 @@ public class Main {
 			System.out.println("No considerar " + i);
 			
 			try{
-			Work worker = new Work(1);
+			Worker worker = new Worker(1);
 			worker.work();
 			worker.validateResults();
 			} catch (Exception e){
@@ -38,7 +38,7 @@ public class Main {
 					JGFInstrumentor.addTimer("Section3:MolDyn:Total");
 					JGFInstrumentor.startTimer("Section3:MolDyn:Total");
 					
-					Work worker = new Work(nTasks);
+					Worker worker = new Worker(nTasks);
 					worker.work();
 					worker.validateResults();
 					JGFInstrumentor.stopTimer("Section3:MolDyn:Total");

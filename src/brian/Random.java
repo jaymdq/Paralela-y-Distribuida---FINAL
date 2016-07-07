@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Random implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int iseed;
 	public double v1,v2;
 

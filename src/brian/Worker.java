@@ -17,7 +17,7 @@ import org.jppf.utils.ExceptionUtils;
 
 import jgfutil.JGFInstrumentor;
 
-public class Work {
+public class Worker {
 
 	// Variables de la clase Work
 	private ArrayList<SuperTask> tasks;
@@ -27,49 +27,30 @@ public class Work {
 
 	private static double den = 0.83134;
 	private static int interactions = 0;
-
 	private static double [] epot;
 	private static double [] vir;
 	private static double [] ek;
 	private static int [] interacts;
-
 	private static int mm = 13;
 	private static int PARTSIZE = mm*mm*mm*4;
-
-	// Variables del Runnable
-	// Del Runnable
-	private int i,j,k,lg,mdsize,move;
-
-	private double l,rcoff,rcoffs,side,sideh,hsq,hsq2,vel,velt;
-	private double a,r,sum,tscale,sc,ekin,ts,sp;
-	private double vaver,vaverh,rand;
+	private int i,j,mdsize,move;
+	private double rcoff,rcoffs,side,sideh,hsq,hsq2,vel;
+	private double a,tscale,sc,ekin;
+	private double vaver,vaverh;
 	private double etot,temp,pres,rp;
-	private double u1,u2,v1,v2,s, xx, yy, zz;
-	//private double xvelocity, yvelocity, zvelocity;
-
+	private double xx, yy, zz;
 	private double [][] sh_force;
 	private double [][][] sh_force2;
-
-	private int ijk,npartm,iseed,tint;
-	private static int irep = 10;
-	private static int istop = 19;
-	private static int iprint = 10;
+	private int npartm;
 	private static int movemx = 50;
-
-	private Random randnum;
-
-	private Particle one [] = null;
-
 	private int n_Task;
-
 	private DataProvider dataProvider;
-
 	private JPPFJob job;
-	private double [][][] sh_force2_aux;
+
 
 	// Constructors
 
-	public Work(int n_Task) {
+	public Worker(int n_Task) {
 
 		this.n_Task = n_Task;
 		this.tasks = new ArrayList<SuperTask>();
