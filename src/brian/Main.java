@@ -1,7 +1,6 @@
 package brian;
 
 import jgfutil.JGFInstrumentor;
-import moldyn.Better.JGFMolDynBenchSizeB_Better;
 
 public class Main {
 
