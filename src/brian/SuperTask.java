@@ -84,9 +84,12 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 	// Methods
 
+	// Paso 1. Sacar Part 1 al thread principal
+	
+	/*
 	private void part_1 (){
 
-		/* Parameter determination */
+		// Parameter determination
 
 		mdsize = PARTSIZE;
 
@@ -106,7 +109,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		vaver = 1.13 * Math.sqrt(tref / 24.0);
 		vaverh = vaver * h;
 
-		/* Particle Generation */
+		// Particle Generation
 
 		xvelocity = 0.0;
 		yvelocity = 0.0;
@@ -140,7 +143,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			}
 		}
 
-		/* Initialise velocities */
+		// Initialise velocities
 
 		iseed = 0;
 		v1 = 0.0;
@@ -166,7 +169,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 			one[i+1].zvelocity  = r * randnum.v2;
 		}
 
-		/* velocity scaling */
+		// velocity scaling
 
 		ekin = 0.0;
 		sp = 0.0;
@@ -215,6 +218,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		}
 
 	}
+	*/
 
 	private void part_2() {
 
@@ -236,7 +240,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		/* compute forces */
 
 		for (i = 0 + id; i < mdsize; i += n_Task) {
-			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts,sh_force2); 
+			one[i].force(side,rcoff,mdsize,i,xx,yy,zz,epot,vir,interacts,sh_force2,id,one); 
 		}
 
 	}
@@ -336,7 +340,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 
 		switch(this.state){
 		case PART_1: {
-			part_1();
+			//part_1();
 			break;
 		}
 		case PART_2: {

@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Warming Up
-		for (int i = 0; i < 5; i++){
+		/*for (int i = 0; i < 5; i++){
 			System.out.println("No considerar " + i);
 			
 			try{
@@ -24,10 +24,10 @@ public class Main {
 			
 			// Se borran los timers
 			JGFInstrumentor.clearTimers();
-		}
+		}*/
 
 		// Variación de cantidad de threads
-		for (int nTasks = 1; nTasks <= limiteSuperiorDeThreads; nTasks++){
+		for (int nTasks = 2; nTasks <= limiteSuperiorDeThreads; nTasks++){
 			System.out.println("\nCantidad de Tasks: " + nTasks);
 
 			// Variación de cantidad de repeticiones

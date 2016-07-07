@@ -12,12 +12,10 @@ public class Particle implements Serializable{
 	public double xcoord, ycoord, zcoord;
 	public double xvelocity,yvelocity,zvelocity;
 	int part_id;
-	int id;
 	double [][] sh_force;
-	SuperTask runner;
 
 	public Particle(double xcoord, double ycoord, double zcoord, double xvelocity,
-			double yvelocity,double zvelocity,double [][] sh_force,int id, SuperTask runner) {
+			double yvelocity,double zvelocity,double [][] sh_force) {
 
 		this.xcoord = xcoord; 
 		this.ycoord = ycoord; 
@@ -26,8 +24,6 @@ public class Particle implements Serializable{
 		this.yvelocity = yvelocity;
 		this.zvelocity = zvelocity;
 		this.sh_force = sh_force;
-		this.id=id;
-		this.runner=runner;
 	}
 
 	public void domove(double side,int part_id, double [][] sh_force) {
@@ -49,7 +45,7 @@ public class Particle implements Serializable{
 
 	}
 
-	public void force(double side, double rcoff,int mdsize,int x, double xx, double yy, double zz,double [] epot,double [] vir,int[] interacts, double[][][] sh_force2) {
+	public void force(double side, double rcoff,int mdsize,int x, double xx, double yy, double zz,double [] epot,double [] vir,int[] interacts, double[][][] sh_force2, int id, Particle[] one) {
 
 		double sideh;
 		double rcoffs;
@@ -66,9 +62,9 @@ public class Particle implements Serializable{
 		fzi = 0.0;
 	
 		for (int i = x + 1; i < mdsize; i++) {
-			xx = this.xcoord - runner.one[i].xcoord;
-			yy = this.ycoord - runner.one[i].ycoord;
-			zz = this.zcoord - runner.one[i].zcoord;
+			xx = this.xcoord - one[i].xcoord;
+			yy = this.ycoord - one[i].ycoord;
+			zz = this.zcoord - one[i].zcoord;
 
 			if(xx < (-sideh)) { xx = xx + side; }
 			if(xx > (sideh))  { xx = xx - side; }

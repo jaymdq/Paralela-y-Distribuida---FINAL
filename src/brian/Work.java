@@ -25,6 +25,13 @@ public class Work {
 
 	// Variables relacionadas al problema
 
+	protected static final int ITERS = 100;
+	protected static final double LENGTH = 50e-10;
+	protected static final double m = 4.0026;
+	protected static final double mu = 1.66056e-27;
+	protected static final double kb = 1.38066e-23;
+	protected static final double TSIM = 50;
+	protected static final double deltat = 5e-16;
 	private static double den = 0.83134;
 	private static int interactions = 0;
 
@@ -37,7 +44,7 @@ public class Work {
 	private static int PARTSIZE = mm*mm*mm*4;
 
 	// Variables del Runnable
-	// Del Runnable
+
 	private int i,j,k,lg,mdsize,move;
 
 	private double l,rcoff,rcoffs,side,sideh,hsq,hsq2,vel,velt;
@@ -45,8 +52,9 @@ public class Work {
 	private double vaver,vaverh,rand;
 	private double etot,temp,pres,rp;
 	private double u1,u2,v1,v2,s, xx, yy, zz;
-	//private double xvelocity, yvelocity, zvelocity;
-
+	private double xvelocity, yvelocity, zvelocity;
+	protected double tref = 0.722;
+	protected double h = 0.064;
 	private double [][] sh_force;
 	private double [][][] sh_force2;
 
@@ -70,11 +78,9 @@ public class Work {
 	// Constructors
 
 	public Work(int n_Task) {
-
 		this.n_Task = n_Task;
 		this.tasks = new ArrayList<SuperTask>();
 		this.oneValues = new HashMap<String, Particle[]>();
-
 	}
 
 	// Getters and Setters
@@ -100,7 +106,7 @@ public class Work {
 			// Difusión de los datos 
 			// Aclaración: el dataProvider tiene que ser creado y rellenado antes de crear el Job.
 			dataProvider = new MemoryMapDataProvider();
-			populateDataProvider();
+			//populateDataProvider();
 
 			// Se crea el trabajo 1
 			JPPFJob job = createJob(n_Task);
@@ -111,14 +117,14 @@ public class Work {
 			job.addJobListener(new JobListenerAdapter() {
 				@Override
 				public synchronized void jobEnded(JobEvent event) {
-					//processResults(event.getJob());
 					processResults(event.getJob());
 				}
 			});
 
-			// Parte 1 -> Distribuido
-			jppfClient.submitJob(job);
-
+			// Parte 1 -> Local
+			part_1();
+			updateTaskStates(SuperTask.STATE.PART_2);
+			
 			// Trabajo del thread principal
 			jgfutil.JGFInstrumentor.addTimer("Section3:MolDyn:Run");
 			jgfutil.JGFInstrumentor.startTimer("Section3:MolDyn:Run");
@@ -127,8 +133,6 @@ public class Work {
 
 			move = 0;
 			for (move = 0; move < movemx; move++) {
-
-				//System.out.println("\n Nueva iteración: " + move );
 
 				// Parte 2 -> Distribuido
 				updateTaskStates(SuperTask.STATE.PART_2);
@@ -360,5 +364,142 @@ public class Work {
 		}
 
 	}
+	
+	
+	// Métodos de procesamiento
+	private void part_1 (){
+
+		/* Parameter determination */
+
+		mdsize = PARTSIZE;
+
+		one = new Particle [mdsize];
+		l = LENGTH;
+
+		side = Math.pow((mdsize/den),0.3333333);
+		rcoff = mm/4.0;
+
+		a = side/mm;
+		sideh = side*0.5;
+		hsq = h*h;
+		hsq2 = hsq*0.5;
+		npartm = mdsize - 1;
+		rcoffs = rcoff * rcoff;
+		tscale = 16.0 / (1.0 * mdsize - 1.0);
+		vaver = 1.13 * Math.sqrt(tref / 24.0);
+		vaverh = vaver * h;
+
+		/* Particle Generation */
+
+		xvelocity = 0.0;
+		yvelocity = 0.0;
+		zvelocity = 0.0;
+
+		ijk = 0;
+		for (lg = 0; lg <= 1; lg++) {
+			for (i = 0; i < mm; i++) {
+				for ( j = 0; j < mm; j++) {
+					for (k = 0; k < mm; k++) {
+						//one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
+						//xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
+						one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
+								xvelocity,yvelocity,zvelocity,sh_force);
+						ijk = ijk + 1;
+					}
+				}
+			}
+		}
+		for (lg = 1; lg <= 2; lg++) {
+			for (i = 0; i < mm; i++) {
+				for (j = 0; j < mm; j++) {
+					for (k = 0; k < mm; k++) {
+						//one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
+						//(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
+						one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
+								(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force);
+						ijk = ijk + 1;
+					}
+				}
+			}
+		}
+
+		/* Initialise velocities */
+
+		iseed = 0;
+		v1 = 0.0;
+		v2 = 0.0;
+
+		randnum = new Random(iseed,v1,v2);
+
+		for (i = 0; i < mdsize; i += 2) {
+			r  = randnum.seed();
+			one[i].xvelocity = r * randnum.v1;
+			one[i+1].xvelocity  = r * randnum.v2;
+		}
+
+		for (i = 0; i < mdsize; i += 2) {
+			r  = randnum.seed();
+			one[i].yvelocity = r * randnum.v1;
+			one[i+1].yvelocity  = r * randnum.v2;
+		}
+
+		for (i = 0; i < mdsize; i += 2) {
+			r  = randnum.seed();
+			one[i].zvelocity = r * randnum.v1;
+			one[i+1].zvelocity  = r * randnum.v2;
+		}
+
+		/* velocity scaling */
+
+		ekin = 0.0;
+		sp = 0.0;
+
+		for(i = 0; i < mdsize; i++) {
+			sp = sp + one[i].xvelocity;
+		}
+		sp = sp / mdsize;
+
+		for(i = 0; i < mdsize; i++) {
+			one[i].xvelocity = one[i].xvelocity - sp;
+			ekin = ekin + one[i].xvelocity * one[i].xvelocity;
+		}
+
+		sp = 0.0;
+		for(i = 0; i < mdsize; i++) {
+			sp = sp + one[i].yvelocity;
+		}
+		sp = sp / mdsize;
+
+		for(i = 0; i < mdsize; i++) {
+			one[i].yvelocity = one[i].yvelocity - sp;
+			ekin = ekin + one[i].yvelocity * one[i].yvelocity;
+		}
+
+		sp = 0.0;
+		for(i = 0; i < mdsize; i++) {
+			sp = sp + one[i].zvelocity;
+		}
+		sp = sp / mdsize;
+
+		for(i = 0; i < mdsize; i++) {
+			one[i].zvelocity = one[i].zvelocity - sp;
+			ekin = ekin + one[i].zvelocity*one[i].zvelocity;
+		}
+
+		ts = tscale * ekin;
+		sc = h * Math.sqrt(tref/ts);
+
+		for(i = 0; i < mdsize; i++) {
+			one[i].xvelocity = one[i].xvelocity * sc;     
+			one[i].yvelocity = one[i].yvelocity * sc;     
+			one[i].zvelocity = one[i].zvelocity * sc;     
+		}
+		
+		for (int i = 0; i < n_Task; i++){
+			oneValues.put("one_"+i, one);
+		}
+
+	}
+	
 
 }
