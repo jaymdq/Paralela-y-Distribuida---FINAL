@@ -12,10 +12,9 @@ public class Particle implements Serializable{
 	public double xcoord, ycoord, zcoord;
 	public double xvelocity,yvelocity,zvelocity;
 	int part_id;
-	double [][] sh_force;
 
 	public Particle(double xcoord, double ycoord, double zcoord, double xvelocity,
-			double yvelocity,double zvelocity,double [][] sh_force) {
+			double yvelocity,double zvelocity) {
 
 		this.xcoord = xcoord; 
 		this.ycoord = ycoord; 
@@ -23,7 +22,6 @@ public class Particle implements Serializable{
 		this.xvelocity = xvelocity;
 		this.yvelocity = yvelocity;
 		this.zvelocity = zvelocity;
-		this.sh_force = sh_force;
 	}
 
 	public void domove(double side,int part_id, double [][] sh_force) {
@@ -83,11 +81,15 @@ public class Particle implements Serializable{
 				rrd4 = rrd2*rrd2;
 				rrd6 = rrd2*rrd4;
 				rrd7 = rrd6*rrd;
-				//md_Better.epot[id] = md_Better.epot[id] + (rrd6 - rrd3);
+				
+				//epot
 				epot[id] = epot[id] + (rrd6 - rrd3);
+				
 				r148 = rrd7 - 0.5*rrd4;
-				//md_Better.vir[id] = md_Better.vir[id] - rd*r148;
+
+				//vir
 				vir[id] = vir[id] - rd*r148;
+				
 				forcex = xx * r148;
 				fxi = fxi + forcex;
 
@@ -103,7 +105,6 @@ public class Particle implements Serializable{
 
 				sh_force2[2][id][i] = sh_force2[2][id][i] - forcez;
 
-				//md_Better.interacts[id]++;
 				interacts[id]++;
 			}
 

@@ -97,8 +97,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 				sh_force[j][i] = 0.0;
 			}
 		}
-		
-		//Estas 3 variables eran de md_Better
+
 		epot[id] = 0.0;
 		vir[id] = 0.0;
 		interacts[id] = 0;	
@@ -120,7 +119,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 				}
 			}
 		}
-		
+
 		/*scale forces, update velocities */
 
 		sum = 0.0;
@@ -172,27 +171,26 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		one 		= dataProvider.getParameter("one_"+id);
 		if (one == null)
 			one = dataProvider.getParameter("one");
-		
+
 		sh_force2	= dataProvider.getParameter("sh_force2");
-		PARTSIZE	= dataProvider.getParameter("PARTSIZE");
-		den 		= dataProvider.getParameter("den");
 		ek 			= dataProvider.getParameter("ek");
 		epot 		= dataProvider.getParameter("epot");
+		interacts	= dataProvider.getParameter("interacts");
+		sh_force	= dataProvider.getParameter("sh_force");
+		vir			= dataProvider.getParameter("vir");
+		
+		
+		PARTSIZE	= dataProvider.getParameter("PARTSIZE");
+		den 		= dataProvider.getParameter("den");
 		etot	 	= dataProvider.getParameter("etot");
 		hsq			= dataProvider.getParameter("hsq");
 		hsq2		= dataProvider.getParameter("hsq2");
-		interacts	= dataProvider.getParameter("interacts");
 		mdsize		= dataProvider.getParameter("mdsize");
 		mm 			= dataProvider.getParameter("mm");
 		move 		= dataProvider.getParameter("move");
 		rcoff 		= dataProvider.getParameter("rcoff");
-		sh_force	= dataProvider.getParameter("sh_force");
 		side 		= dataProvider.getParameter("side");
 		vaverh 		= dataProvider.getParameter("vaverh");
-		vir			= dataProvider.getParameter("vir");
-		//xx 			= dataProvider.getParameter("xx");
-		//yy 			= dataProvider.getParameter("yy");
-		//zz			= dataProvider.getParameter("zz");
 		tscale		= dataProvider.getParameter("tscale");
 		a			= dataProvider.getParameter("a");
 		sideh 		= dataProvider.getParameter("sideh");
@@ -200,26 +198,23 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		rcoffs 		= dataProvider.getParameter("rcoffs");
 		vaver 		= dataProvider.getParameter("vaver");
 		ekin 		= dataProvider.getParameter("ekin");
-		vir 		= dataProvider.getParameter("vir");
 		temp 		= dataProvider.getParameter("temp");
 		pres 		= dataProvider.getParameter("pres");
 		vel			= dataProvider.getParameter("vel");
 		rp			= dataProvider.getParameter("rp");
 		sc			= dataProvider.getParameter("sc");
+
+		//xx 			= dataProvider.getParameter("xx");
+		//yy 			= dataProvider.getParameter("yy");
+		//zz			= dataProvider.getParameter("zz");
 	}
 
 	@Override
 	public void run() {
 
 		id = Integer.parseInt(getId());
-		
-		/*if (id > 0){
-			setResult(null);
-			return;
-		}*/
-			
-		DataProvider dataProvider = getDataProvider();
 
+		DataProvider dataProvider = getDataProvider();
 		setData(dataProvider);
 
 		switch(this.state){
@@ -239,7 +234,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		// Los resultados los devuelvo en un HashMap
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		
+
 		result.put("sh_force2_[0]_"+id,sh_force2[0][id]);
 		result.put("sh_force2_[1]_"+id,sh_force2[1][id]);
 		result.put("sh_force2_[2]_"+id,sh_force2[2][id]);
@@ -248,7 +243,7 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		result.put("vir_"+id,vir[id]);
 		result.put("interacts_"+id,interacts[id]);
 		result.put("ek_"+id, ek[id]);
-		
+
 		//--
 		//result.put("mdsize", mdsize);
 		//result.put("side", side);
@@ -268,18 +263,15 @@ public class SuperTask extends AbstractTask<HashMap<String, Object>> {
 		//result.put("npartm",npartm);
 		
 		
-		//result.put("sh_force",sh_force);
-		
-		//--
-		result.put("ekin",ekin);
-		result.put("etot",etot);
+		result.put("sh_force",sh_force); // tmb no seria necesario
+		result.put("ekin",ekin); // tmb no seria necesario
+		result.put("etot",etot); 
 		result.put("temp",temp);
 		result.put("pres",pres);
 		result.put("vel",vel);
 		result.put("rp",rp);
 		result.put("sc",sc);
-		
-		
+
 		// Se devuelven los resultados
 		setResult(result);
 	}

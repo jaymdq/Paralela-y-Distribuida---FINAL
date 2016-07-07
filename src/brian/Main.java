@@ -41,6 +41,7 @@ public class Main {
 					Work worker = new Work(nTasks);
 					worker.work();
 					worker.validateResults();
+					
 					JGFInstrumentor.stopTimer("Section3:MolDyn:Total");
 					
 				    JGFInstrumentor.printTimer("Section3:MolDyn:Run"); 

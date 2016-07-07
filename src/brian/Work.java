@@ -60,15 +60,12 @@ public class Work {
 	private double vaver,vaverh,rand;
 	private double etot,temp,pres,rp;
 	private double u1,u2,v1,v2,s, xx, yy, zz;
-	//private double xvelocity, yvelocity, zvelocity;
 
 	private double [][] sh_force;
 	private double [][][] sh_force2;
 
 	private int ijk,npartm,iseed,tint;
-	private static int irep = 10;
-	private static int istop = 19;
-	private static int iprint = 10;
+	
 	private static int movemx = 50;
 
 	private Random randnum;
@@ -139,12 +136,9 @@ public class Work {
 			move = 0;
 			for (move = 0; move < movemx; move++) {
 
-				//System.out.println("\n Nueva iteración: " + move );
-
 				// Parte 1 -> Distribuido
 				updateTaskStates(SuperTask.STATE.PART_1);
 				jppfClient.submitJob(job);
-
 				
 				// Trabajo del thread principal
 				for(int k = 0; k < 3; k++) {
@@ -178,7 +172,6 @@ public class Work {
 				// Parte 2 -> Distribuido
 				updateTaskStates(SuperTask.STATE.PART_2);
 				jppfClient.submitJob(job);
-				
 
 			}
 
@@ -193,6 +186,8 @@ public class Work {
 
 	private void populateDataProvider() {
 
+		dataProvider.clear();
+		
 		if (oneValues.isEmpty()) {
 			dataProvider.setParameter("one", one);
 		}else
@@ -240,6 +235,7 @@ public class Work {
 		HashMap<String, Object> results = (HashMap<String, Object>) task.getResult();
 
 		// Cosas que estoy seguro que no vale la pena obtener
+		
 		//mdsize 			= (int) results.get("mdsize");
 		//rcoff 			= (double) results.get("rcoff");
 		//hsq 			= (double) results.get("hsq");
@@ -254,14 +250,14 @@ public class Work {
 		//xx 				= (double) results.get("xx");
 		//yy 				= (double) results.get("yy");
 		//zz 				= (double) results.get("zz");
+		//npartm 			= (int) results.get("npartm");
 		
 		//--
-		
 		
 		sh_force 		= (double[][]) results.get("sh_force");
 		
 		//--
-		//npartm 			= (int) results.get("npartm");
+		
 		ekin 			= (double) results.get("ekin");
 		etot 			= (double) results.get("etot");
 		temp 			= (double) results.get("temp");
@@ -304,7 +300,6 @@ public class Work {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 
 		return job;
@@ -334,8 +329,8 @@ public class Work {
 			if (task.getThrowable() != null) { 
 				System.out.printf("%s raised an exception : %s%n", task.getId(), ExceptionUtils.getStackTrace(task.getThrowable()).toString());
 			} else { 
-				getResults(task);
 				System.out.println("Result of " + task.getId() + " " + task.getResult().toString());
+				getResults(task);
 			}
 		}
 	}
@@ -351,8 +346,7 @@ public class Work {
 
 	public void validateResults(){
 
-		double refval[] = {1731.4306625334357,7397.392307839352};
-		double dev = Math.abs(ek[0] - refval[1]);
+		double dev = Math.abs(ek[0] - 7397.392307839352);
 		if (dev > 1.0e-10 ){
 			System.out.println("\n\nFalló la validación");
 			System.out.println("Kinetic Energy = " + ek[0] + "  " + dev + "  " + 1);
@@ -399,7 +393,7 @@ public class Work {
 						//one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
 						//xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
 						one[ijk] = new Particle((i*a+lg*a*0.5),(j*a+lg*a*0.5),(k*a),
-								xvelocity,yvelocity,zvelocity,sh_force);
+								xvelocity,yvelocity,zvelocity);
 						ijk = ijk + 1;
 					}
 				}
@@ -412,7 +406,7 @@ public class Work {
 						//one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
 						//(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force,sh_force2,id,this);
 						one[ijk] = new Particle((i*a+(2-lg)*a*0.5),(j*a+(lg-1)*a*0.5),
-								(k*a+a*0.5),xvelocity,yvelocity,zvelocity,sh_force);
+								(k*a+a*0.5),xvelocity,yvelocity,zvelocity);
 						ijk = ijk + 1;
 					}
 				}
