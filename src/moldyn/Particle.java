@@ -1,4 +1,4 @@
-package brian;
+package moldyn;
 
 import java.io.Serializable;
 

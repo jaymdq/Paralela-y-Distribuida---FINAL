@@ -1,4 +1,4 @@
-package brian;
+package moldyn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
